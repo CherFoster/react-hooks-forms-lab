@@ -7,31 +7,34 @@ function ItemForm(props) {
     category: 'Produce'
   });
 
- function handleSumbit(e){
-  e.preventDefault();
+ function handleChange(e){
+  setNewItem({
+    ...addItem,
+    [e.target.name]: e.target.value
+  })
  }
 
- function handleChange(e){
-  setNewItem()
-  
- }
+ function handleSumbit(e){
+  e.preventDefault();
 
   const newItem = {
     id: uuid(), 
     name: addItem.name,
     category: addItem.category
-  };
+  }
+  props.onItemFormSubmit(newItem)
+}
 
   return (
     <form className="NewItem" onSubmit={handleSumbit}>
       <label>
         Name:
-        <input type="text" name="name" onChange={handleChange} />
+        <input type="text" name="name" onChange={handleChange} value={addItem.name}/>
       </label>
 
       <label>
         Category:
-        <select name="category">
+        <select name="category" onChange={handleChange}>
           <option value="Produce">Produce</option>
           <option value="Dairy">Dairy</option>
           <option value="Dessert">Dessert</option>
